@@ -151,9 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce4b27ce11c37794587178f31281e800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pixelPrefab: {fileID: 7132993955074615891, guid: 13095ee504124b14e93c55e7068210b4, type: 3}
-  mazeWidth: 20
-  mazeHeight: 20
+  width: 21
+  height: 21
+  brick: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  brick2: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!4 &278806297
 Transform:
   m_ObjectHideFlags: 0
@@ -162,7 +163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278806295}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7069544, y: -5.31831, z: -0.43027183}
+  m_LocalPosition: {x: -23.3, y: -12.69, z: -0.43027183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -258,14 +259,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571754816}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.3, y: 0, z: 9.39}
-  m_LocalScale: {x: 34.869, y: 0.077328, z: 32.106}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 10.22, y: 9.9, z: 9.39}
+  m_LocalScale: {x: 72.26, y: 0.077328, z: 49.99}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +412,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 59
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -436,11 +437,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.7130225, y: 0.0010629491, z: -0.0010505853, w: 0.70113957}
-  m_LocalPosition: {x: 13.057928, y: 20.865725, z: 9.565547}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.74907, y: 11.928887, z: -41.673622}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

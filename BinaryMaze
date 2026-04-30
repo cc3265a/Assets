@@ -1,0 +1,140 @@
+// using UnityEngine;
+// using System;
+// using System.Collections;
+// using System.Collections.Generic;
+
+// public class GameManager : MonoBehaviour {
+//     public int width, height;
+//     public Material brick;
+//     public Material brick2;
+
+
+//     private int[,] Maze;
+//     private List<Vector3> pathMazes = new List<Vector3>();
+//     private Stack<Vector2> _tiletoTry = new Stack<Vector2>();
+//     private List<Vector2> offsets = new List<Vector2> { new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 0), new Vector2(-1, 0) };
+//     private System.Random rnd = new System.Random();
+//     private int _width, _height;
+//     private Vector2 _currentTile;
+//     public Vector2 CurrentTile
+//     {
+//         get { return _currentTile; }
+//         private set
+//         {
+//             if (value.x < 1 || value.x >= this.width - 1 || value.y < 1 || value.y >= this.height - 1)
+//             {
+//                 throw new ArgumentException("CurrentTile must be within the one tile border all around the maze");
+//             }
+//             if (value.x % 2 == 1 || value.y % 2 == 1)
+//             { _currentTile = value; }
+//             else
+//             {
+//                 throw new ArgumentException("The current square must not be both on an even X-axis and an even Y-axis, to ensure we can get walls around all tunnels");
+//             }
+//         }
+//     }
+
+//     private static GameManager instance;
+//     public static GameManager Instance
+//     {
+//         get
+//         {
+//             return instance;
+//         }
+//     }
+
+//     void Awake()
+//     {
+//         instance = this;
+//     }
+
+//     void Start()
+//     {
+//         Camera.main.orthographic = true;
+//         Camera.main.orthographicSize = 30;
+
+//         GameObject ptype = null;
+
+
+//         var genMaze = GenerateMazeBinary();
+
+//         for (int i = 0; i <= width-1; i++)
+//         {
+//             for (int j = 0; j <= height-1; j++)
+//             {
+//                 if (genMaze[i, j] == 1)
+//                 {
+//                     ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
+//                     ptype.transform.position = new Vector3(i * ptype.transform.localScale.x, j * ptype.transform.localScale.y, 0);
+//                     if (brick != null)
+//                     {
+//                         ptype.GetComponent<Renderer>().material = brick;
+//                         if (i == 2 || j == 2)
+//                     {
+//                         ptype.GetComponent<Renderer>().material = brick2;
+//                     }
+//                     }
+//                     ptype.transform.parent = transform;
+                    
+//                 }
+//                 else if (genMaze[i, j] == 0)
+//                 {
+//                     pathMazes.Add(new Vector3(i, j, 0));
+//                 }
+
+//             }
+//         }
+
+//     }
+
+//     int[,] GenerateMazeBinary()
+//     {
+//         int[,] genMaze = new int[width,height];
+
+//         for (int i = 0; i <= width-1; i++)
+//         {
+//             for (int j = 0; j <= height-1; j++)
+//             {
+//                 if (!(i % 2 ==1 && j % 2 == 1)){
+//                     genMaze[i,j] = 1;
+//                 }
+
+//             }
+//         }
+
+//        for (int i = 1; i < width; i += 2)
+//         {
+//             for (int j = 1; j < height; j += 2)
+//             {
+//                 int right = (int)UnityEngine.Random.Range(0,2);
+//                 if (j == height - 2)
+//                 {
+//                     right = 1;
+//                 }
+//                 if (i == width - 2)
+//                 {
+//                     right = 0;
+//                 }
+//                 if (j == height - 2 && i == width - 2)
+//                 {
+//                     break;
+//                 }
+
+//                 if (right == 1)
+//                 {
+//                     genMaze[i+1,j] = 0;
+//                 }
+//                 else
+//                 {
+//                     genMaze[i,j+1] = 0;
+//                 }
+//                 print("x = " + i + " y = " + j + "choice: " + right);
+//             }
+//         }
+//         genMaze[0,1] = 0;
+//         genMaze[width -1, height -2] = 0;
+//         return genMaze;
+//     }
+
+
+// }
