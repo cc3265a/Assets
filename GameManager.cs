@@ -9,6 +9,13 @@ public class GameManager : MonoBehaviour {
     public Material brick;
     public Material brick2;
 
+
+    int BTCount = 0;
+
+    public int displace = 25;
+
+    public int many = 0;
+
     public int sizeInt = 30;
     private int[,] Maze;
     private List<Vector3> pathMazes = new List<Vector3>();
@@ -51,13 +58,26 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        int displace = 25;
+        
         Camera.main.orthographic = true;
         Camera.main.orthographicSize = sizeInt;
 
+
+        GenBinary();
+
+        GenAB(); 
+
+        for (int i = 0; i < 3; i++)
+        {
+            GenerateMazeBacktrack();
+            many++;
+        }
+
+    }
+    
+    void GenBinary()
+    {
         GameObject ptype = null;
-
-
         var genMaze = GenerateMazeBinary();
         for (int i = 0; i <= width-1; i++)
         {
@@ -139,96 +159,99 @@ public class GameManager : MonoBehaviour {
 
             }
         }
+    }
 
-
-        // var genMazeAB1 = GenerateMazeAB();
-        // for (int i = 0; i <= width-1; i++)
-        // {
-        //     for (int j = 0; j <= height-1; j++)
-        //     {
-        //         if (genMazeAB1[i, j] == 1)
-        //         {
-        //             ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //             ptype.transform.position = new Vector3(i * ptype.transform.localScale.x, j * ptype.transform.localScale.y + displace, 0);
-        //             if (brick != null)
-        //             {
-        //                 ptype.GetComponent<Renderer>().material = brick;
-        //                 if (i == 2 || j == 2)
-        //             {
-        //                 ptype.GetComponent<Renderer>().material = brick2;
-        //             }
-        //             }
-        //             ptype.transform.parent = transform;
+    void GenAB()
+    {
+        GameObject ptype = null;
+        var genMazeAB1 = GenerateMazeAB();
+        for (int i = 0; i <= width-1; i++)
+        {
+            for (int j = 0; j <= height-1; j++)
+            {
+                if (genMazeAB1[i, j] == 1)
+                {
+                    ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    ptype.transform.position = new Vector3(i * ptype.transform.localScale.x, j * ptype.transform.localScale.y + displace, 0);
+                    if (brick != null)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick;
+                        if (i == 2 || j == 2)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick2;
+                    }
+                    }
+                    ptype.transform.parent = transform;
                     
-        //         }
-        //         else if (genMazeAB1[i, j] == 0)
-        //         {
-        //             pathMazes.Add(new Vector3(i, j, 0));
-        //         }
+                }
+                else if (genMazeAB1[i, j] == 0)
+                {
+                    pathMazes.Add(new Vector3(i, j, 0));
+                }
 
-        //     }
-        // }
+            }
+        }
 
-        // var genMazeAB2 = GenerateMazeAB();
-        // for (int i = 0; i <= width-1; i++)
-        // {
-        //     for (int j = 0; j <= height-1; j++)
-        //     {
-        //         if (genMazeAB2[i, j] == 1)
-        //         {
-        //             ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //             ptype.transform.position = new Vector3(i * ptype.transform.localScale.x + displace, j * ptype.transform.localScale.y + displace, 0);
-        //             if (brick != null)
-        //             {
-        //                 ptype.GetComponent<Renderer>().material = brick;
-        //                 if (i == 2 || j == 2)
-        //             {
-        //                 ptype.GetComponent<Renderer>().material = brick2;
-        //             }
-        //             }
-        //             ptype.transform.parent = transform;
+        var genMazeAB2 = GenerateMazeAB();
+        for (int i = 0; i <= width-1; i++)
+        {
+            for (int j = 0; j <= height-1; j++)
+            {
+                if (genMazeAB2[i, j] == 1)
+                {
+                    ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    ptype.transform.position = new Vector3(i * ptype.transform.localScale.x + displace, j * ptype.transform.localScale.y + displace, 0);
+                    if (brick != null)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick;
+                        if (i == 2 || j == 2)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick2;
+                    }
+                    }
+                    ptype.transform.parent = transform;
                     
-        //         }
-        //         else if (genMazeAB2[i, j] == 0)
-        //         {
-        //             pathMazes.Add(new Vector3(i, j, 0));
-        //         }
+                }
+                else if (genMazeAB2[i, j] == 0)
+                {
+                    pathMazes.Add(new Vector3(i, j, 0));
+                }
 
-        //     }
-        // }
-        // var genMazeAB3 = GenerateMazeAB();
-        // for (int i = 0; i <= width-1; i++)
-        // {
-        //     for (int j = 0; j <= height-1; j++)
-        //     {
-        //         if (genMazeAB3[i, j] == 1)
-        //         {
-        //             ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //             ptype.transform.position = new Vector3(i * ptype.transform.localScale.x + displace*2, j * ptype.transform.localScale.y + displace, 0);
-        //             if (brick != null)
-        //             {
-        //                 ptype.GetComponent<Renderer>().material = brick;
-        //                 if (i == 2 || j == 2)
-        //             {
-        //                 ptype.GetComponent<Renderer>().material = brick2;
-        //             }
-        //             }
-        //             ptype.transform.parent = transform;
+            }
+        }
+        var genMazeAB3 = GenerateMazeAB();
+        for (int i = 0; i <= width-1; i++)
+        {
+            for (int j = 0; j <= height-1; j++)
+            {
+                if (genMazeAB3[i, j] == 1)
+                {
+                    ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    ptype.transform.position = new Vector3(i * ptype.transform.localScale.x + displace*2, j * ptype.transform.localScale.y + displace, 0);
+                    if (brick != null)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick;
+                        if (i == 2 || j == 2)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick2;
+                    }
+                    }
+                    ptype.transform.parent = transform;
                     
-        //         }
-        //         else if (genMazeAB3[i, j] == 0)
-        //         {
-        //             pathMazes.Add(new Vector3(i, j, 0));
-        //         }
+                }
+                else if (genMazeAB3[i, j] == 0)
+                {
+                    pathMazes.Add(new Vector3(i, j, 0));
+                }
 
-        //     }
-        // }
-
+            }
+        }
     }
     
-
+    
     int[,] GenerateMazeBinary()
     {
+        int BCount = 0;
         int[,] genMaze = new int[width,height];
 
         for (int i = 0; i <= width-1; i++)
@@ -238,7 +261,7 @@ public class GameManager : MonoBehaviour {
                 if (!(i % 2 ==1 && j % 2 == 1)){
                     genMaze[i,j] = 1;
                 }
-
+                BCount++;
             }
         }
 
@@ -246,6 +269,7 @@ public class GameManager : MonoBehaviour {
         {
             for (int j = 1; j < height; j += 2)
             {
+                BCount++;
                 int right = (int)UnityEngine.Random.Range(0,2);
                 if (j == height - 2)
                 {
@@ -268,16 +292,18 @@ public class GameManager : MonoBehaviour {
                 {
                     genMaze[i,j+1] = 0;
                 }
-                print("x = " + i + " y = " + j + "choice: " + right);
+                // print("x = " + i + " y = " + j + "choice: " + right);
             }
         }
         genMaze[0,1] = 0;
         genMaze[width -1, height -2] = 0;
+        // print("BCount = " + BCount);
         return genMaze;
     }
 
     int[,] GenerateMazeAB()
     {
+        int ABCount = 0;
         //new 2d array of width and height
         int[,] genMaze = new int[width,height];
         int unvisited = 0;
@@ -291,6 +317,7 @@ public class GameManager : MonoBehaviour {
                 {
                     unvisited++;
                 }
+                ABCount++;
             }
         }
 
@@ -302,6 +329,7 @@ public class GameManager : MonoBehaviour {
             onVec.y = (int)UnityEngine.Random.Range(0,height);
             // on[0] = (int)Mathf.Floor(UnityEngine.Random.Range(0,2) * height);
             // on[1] = (int)Mathf.Floor(UnityEngine.Random.Range(0,2) * width);
+            ABCount++;
         }while (onVec.x % 2 == 0 || onVec.y % 2 == 0);
 
         Vector2 holdVec = new Vector2((int)onVec.x, (int)onVec.y);
@@ -321,48 +349,50 @@ public class GameManager : MonoBehaviour {
                             unvisitedArr.Add(unvisVec);
                         }
                     }
+                    ABCount++;
                 }
             }
 
         int breakCount = 0;
         // while (unvisitedArr.Count != 0)
         int CRASH = unvisitedArr.Count*3;
-        int MAXCRASH = 50000;
-        print("ENTERING WHILE");
-        while(CRASH > 0)
+        int MAXCRASH = 100000;
+        // print("ENTERING WHILE");
+        while(MAXCRASH > 0)
         {
+            ABCount++;
             MAXCRASH--;
             if (MAXCRASH <= 0)
             {
                 print("GIVING UP");
                 break;
             }
-            print("while" + unvisitedArr.Count);
+            // print("while" + unvisitedArr.Count);
             if (unvisitedArr.Count > CRASH)
             {
                 CRASH = unvisitedArr.Count;
-                print("WAGH");
+                // print("WAGH");
             }
                 
             var n = neighborsAB(genMaze, onVec);
-            print("n count is = " + n.Count);
+            // print("n count is = " + n.Count);
             if (n.Count == 0)
             {
                 breakCount++;
-                print("break count = " + breakCount);
+                // print("break count = " + breakCount);
                 continue;
             }
             int holdRand = UnityEngine.Random.Range(0,n.Count-1);
             Vector2 to = n[holdRand];
-            print("to is " + to);
+            // print("to is " + to);
             int holdOOBX = (int)to.x;
             int holdOOBY = (int)to.y;
             bool OOB = (holdOOBX >= width) || (holdOOBY >= height);
 
-            print("x = " + holdOOBX);
-            print("y = " + holdOOBY);
-            print("width = " + width);
-            print("hieght = " + height);
+            // print("x = " + holdOOBX);
+            // print("y = " + holdOOBY);
+            // print("width = " + width);
+            // print("hieght = " + height);
 
 
             if (OOB == false)
@@ -379,26 +409,26 @@ public class GameManager : MonoBehaviour {
 
                     Vector2 minusVec = to - onVec;
                     minusVec = minusVec/2;
-                    print(minusVec + "= minusVec");
+                    // print(minusVec + "= minusVec");
                     Vector2 wallVec = to - minusVec;
                     
-                    print("toVec is "+ to);
+                    // print("toVec is "+ to);
 
-                    print("x = " + holdX);
-                    print("y = " + holdY);
+                    // print("x = " + holdX);
+                    // print("y = " + holdY);
                     genMaze[holdX, holdY] = 0;
                     genMaze[(int)wallVec.x, (int)wallVec.y] = 0;
-                    print("toVec setting (" + holdX + ", " + holdY + ") to zero");
+                    // print("toVec setting (" + holdX + ", " + holdY + ") to zero");
                     unvisitedArr.Remove(to);
                     
                 }  
             }
             // unvisited--;
             onVec = to;
-            print("CRASH = " + CRASH);
+            // print("CRASH = " + CRASH);
             CRASH--;
         }
-        print("LEAVING");
+        // print("LEAVING");
 
         genMaze[0,1] = 0;
         genMaze[height -1, width -2] =0;
@@ -411,7 +441,7 @@ public class GameManager : MonoBehaviour {
         //         // print("thing " + genMaze[i,j]);
         //     }
         // }
-
+        print("ABCount = " + ABCount);
         return genMaze;
     }
 
@@ -490,5 +520,150 @@ public class GameManager : MonoBehaviour {
 
         return validNeighborsAB;
     }
+
+    void GenerateMazeBacktrack()
+    {
+        //new 2d array of width and height
+        Maze = new int[width, height];
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                //put a one in each slot of the array (fill in)
+                Maze[x, y] = 1;
+                BTCount++;
+            }
+        }
+        CurrentTile = Vector2.one;
+        _tiletoTry.Push(CurrentTile);
+        Maze = CreateMaze();
+        GameObject ptype = null;
+
+        for (int i = 0; i <= Maze.GetUpperBound(0); i++)
+        {
+            for (int j = 0; j <= Maze.GetUpperBound(1); j++)
+            {
+                if (Maze[i, j] == 1)
+                {
+                    ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    ptype.transform.position = new Vector3(i * ptype.transform.localScale.x + displace*many, j * ptype.transform.localScale.y + displace*2, 0);
+                    if (brick != null)
+                    {
+                        ptype.GetComponent<Renderer>().material = brick;
+                    }
+                    ptype.transform.parent = transform;
+                }
+                else if (Maze[i, j] == 0)
+                {
+                    pathMazes.Add(new Vector3(i, j, 0));
+                }
+
+            }
+        }
+        // print("BTCount = " + BTCount);
+    }
+
+    public int[,] CreateMaze()
+    {
+        //local variable to store neighbors to the current square
+        //as we work our way through the maze
+        List<Vector2> neighbors;
+        //as long as there are still tiles to try
+        while (_tiletoTry.Count > 0)
+        {
+            BTCount++;
+            //excavate the square we are on
+            Maze[(int)CurrentTile.x, (int)CurrentTile.y] = 0;
+
+            //get all valid neighbors for the new tile
+            neighbors = GetValidNeighbors(CurrentTile);
+
+            //if there are any interesting looking neighbors
+            if (neighbors.Count > 0)
+            {
+                //remember this tile, by putting it on the stack
+                _tiletoTry.Push(CurrentTile);
+                //move on to a random of the neighboring tiles
+                CurrentTile = neighbors[rnd.Next(neighbors.Count)];
+            }
+            else
+            {
+                //if there were no neighbors to try, we are at a dead-end
+                //toss this tile out 
+                //(thereby returning to a previous tile in the list to check).
+                CurrentTile = _tiletoTry.Pop();
+            }
+        }
+        Maze[0,1] = 0;
+        Maze[height -1, width -2] =0;
+
+        return Maze;
+    }
+
+    private List<Vector2> GetValidNeighbors(Vector2 centerTile)
+    {
+
+        List<Vector2> validNeighbors = new List<Vector2>();
+
+        //Check all four directions around the tile
+        foreach (var offset in offsets)
+        {
+            BTCount++;
+            //find the neighbor's position
+            Vector2 toCheck = new Vector2(centerTile.x + offset.x, centerTile.y + offset.y);
+
+            //make sure the tile is not on both an even X-axis and an even Y-axis
+            //to ensure we can get walls around all tunnels
+            if (toCheck.x % 2 == 1 || toCheck.y % 2 == 1)
+            {
+                //if the potential neighbor is unexcavated (==1)
+                //and still has three walls intact (new territory)
+                if (Maze[(int)toCheck.x, (int)toCheck.y] == 1  && HasThreeWallsIntact(toCheck))
+                {
+                    //add the neighbor
+                    validNeighbors.Add(toCheck);
+                }
+            }
+        }
+
+        return validNeighbors;
+    }
+
+
+    private bool HasThreeWallsIntact(Vector2 Vector2ToCheck)
+    {
+        int intactWallCounter = 0;
+
+        //Check all four directions around the tile
+        foreach (var offset in offsets)
+        {
+            BTCount++;
+            //find the neighbor's position
+            Vector2 neighborToCheck = new Vector2(Vector2ToCheck.x + offset.x, Vector2ToCheck.y + offset.y);
+
+            //make sure it is inside the maze, and it hasn't been dug out yet
+            if (IsInside(neighborToCheck) && Maze[(int)neighborToCheck.x, (int)neighborToCheck.y] == 1)
+            {
+                intactWallCounter++;
+            }
+        }
+
+        //tell whether three walls are intact
+        return intactWallCounter == 3;
+
+    }
+
+    private bool IsInside(Vector2 p)
+    {
+        if (p.x >=0 && p.y >= 0 && p.x < width && p.y < height){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 
 }
